@@ -1,5 +1,6 @@
 #!/usr/bin/env python3
 
+import json
 import os
 import subprocess
 
@@ -8,10 +9,11 @@ BASE_DIR=os.path.dirname(SCRIPT_DIR)
 
 ENV_DIR = os.path.join(BASE_DIR, "environments")
 
-def export(blender, src, dst):
+def export(blender: str, src: str, dst: str):
     subprocess.check_call([blender, "-b", "-P", os.path.join(SCRIPT_DIR, "blender_gltf_converter.py"), "--", src, dst]) 
 
-def export_all(blender):
+def export_all(blender: str) -> list:
+    meta = []
     for dir in os.listdir(ENV_DIR):
         dir = os.path.join(ENV_DIR, dir)
         if not os.path.isdir(dir):
@@ -19,7 +21,17 @@ def export_all(blender):
 
         for f in os.listdir(dir):
             if f.endswith(".blend"):
-                export(blender, os.path.join(dir, f), f[:-5] + "glb")
+
+                base = f[:-6]
+                out = f"{base}.glb"
+
+                m = json.load(open(os.path.join(dir, f"{base}.json")))
+
+                export(blender, os.path.join(dir, f), out)
+                m["url"] = out
+                m["size"] = os.stat(out).st_size
+                meta.append(m)
+    return meta
 
 if __name__ == "__main__":
     import argparse
@@ -28,4 +40,6 @@ if __name__ == "__main__":
 
     args = parser.parse_args()
 
-    export_all(args.blender_path)
+    meta = export_all(args.blender_path)
+    with open("index.json", "w") as f:
+        json.dump(meta, f)
