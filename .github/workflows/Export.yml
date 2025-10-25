@@ -16,7 +16,7 @@ jobs:
     - name: Install dependencies
       run: |
         sudo apt-get update
-        sudo apt-get install blender
+        sudo apt-get install blender python3-numpy
 
     - name: Generate gltf
       run: scripts/export-all.py
