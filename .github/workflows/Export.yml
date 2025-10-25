@@ -7,16 +7,13 @@ jobs:
   export-gltf:
     name: Export gltf
     runs-on: ubuntu-24.04
+    container:
+      image: linuxserver/blender:4.5.3
 
     steps:
     - uses: actions/checkout@v4
       with:
         fetch-depth: 0
-
-    - name: Install dependencies
-      run: |
-        sudo apt-get update
-        sudo apt-get install blender python3-numpy
 
     - name: Generate gltf
       run: scripts/export-all.py
