@@ -9,8 +9,8 @@ BASE_DIR=os.path.dirname(SCRIPT_DIR)
 
 ENV_DIR = os.path.join(BASE_DIR, "environments")
 
-def export(blender: str, src: str, dst: str):
-    subprocess.check_call([blender, "-b", "-P", os.path.join(SCRIPT_DIR, "blender_gltf_converter.py"), "--", src, dst]) 
+def export(blender: str, src: str, dst: str, preview: str):
+    subprocess.check_call([blender, "-b", "-P", os.path.join(SCRIPT_DIR, "blender_gltf_converter.py"), "--", src, dst, preview])
 
 def export_all(blender: str) -> list:
     meta = []
@@ -24,12 +24,14 @@ def export_all(blender: str) -> list:
 
                 base = f[:-6]
                 out = f"{base}.glb"
+                screenshot = f"{base}.png"
 
                 m = json.load(open(os.path.join(dir, f"{base}.json")))
 
-                export(blender, os.path.join(dir, f), out)
+                export(blender, os.path.join(dir, f), out, screenshot)
                 m["url"] = out
                 m["size"] = os.stat(out).st_size
+                m["screenshot"] = screenshot
                 meta.append(m)
     return meta
 

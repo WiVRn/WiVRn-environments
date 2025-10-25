@@ -24,6 +24,7 @@ def runner():
     # Arguments go here, e.g. asset path, output path, other custom properties and flags
     parser.add_argument('src', help='Path to a model you want to convert.')
     parser.add_argument('out', help='Path of the output gltf file.')
+    parser.add_argument('preview', help='Path of the preview file.')
 
     # The -- is a separator between arguments passed to Blender directly and to your script
     argv = sys.argv
@@ -48,6 +49,13 @@ def runner():
     # https://docs.blender.org/api/current/bpy.ops.export_scene.html#bpy.ops.export_scene.gltf
     # Parameters that you won't set will use your Blender settings
     bpy.ops.export_scene.gltf(filepath=args.out)
+
+    bpy.context.scene.render.resolution_x = 256
+    bpy.context.scene.render.resolution_y = 256
+    bpy.context.scene.render.engine = 'BLENDER_EEVEE_NEXT'
+    bpy.context.scene.render.film_transparent = True
+    bpy.context.scene.render.filepath = args.preview
+    bpy.ops.render.render(write_still=True)
 
 
 if __name__ == "__main__":

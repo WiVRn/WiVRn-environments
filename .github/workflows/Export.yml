@@ -23,5 +23,6 @@ jobs:
       with:
         name: gltf
         path: |
-          **/*.glb
+          *.glb
+          *.png
           index.json
