@@ -20,3 +20,9 @@ jobs:
 
     - name: Generate gltf
       run: scripts/export-all.py
+
+    - name: Upload gltf
+      uses: actions/upload-artifact@v4
+      with:
+        name: gltf
+        path: "**/*.gltf"
