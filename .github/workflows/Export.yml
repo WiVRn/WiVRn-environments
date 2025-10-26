@@ -26,3 +26,17 @@ jobs:
           *.glb
           *.png
           index.json
+
+    - name: Publish gltf
+      uses: softprops/action-gh-release@v2
+      if: github.ref == 'refs/heads/master'
+      with:
+        tag_name: "environments-${{ github.sha }}"
+        generate_release_notes: true
+        draft: false
+        prerelease: false
+        fail_on_unmatched_files: true
+        files: |
+          *.glb
+          *.png
+          index.json
