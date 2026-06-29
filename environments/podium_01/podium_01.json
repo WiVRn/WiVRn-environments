@@ -1,6 +1,6 @@
 {
 	"name": "Podium",
-	"description": "A glowing podium suspended in the sky.",
+	"description": "A glowing podium suspended in the sky. Uses DaySkyHDRI024B from AmbientCG.",
 	"author": "cubee (cubee_cb)",
 	"version": "1.0.0"
 }
