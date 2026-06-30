@@ -1,6 +1,6 @@
 {
 	"name": "Cubespace",
-	"description": "A glass platform surrounded by floating cubes.",
+	"description": "A colourful glass platform surrounded by floating cubes. Uses MorningSkyHDRI011B from ambientCG.",
 	"author": "cubee (cubee_cb)",
 	"version": "1.0.0"
 }
